@@ -1,0 +1,11 @@
+version: '3'
+services:
+  ai-model:
+    build:
+      context: .
+      dockerfile: containerization/Dockerfile
+    ports:
+      - 5000:5000
+    environment:
+      - MODEL_NAME=image-classification
+      - MODEL_VERSION=v1.0.0

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-nexus
+  template:
+    metadata:
+      labels:
+        app: ai-nexus
+    spec:
+      containers:
+        - name: ai-nexus
+          image: yourusername/ai-nexus
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MODEL_NAME
+              value: image-classification
+            - name: MODEL_VERSION
+              value: v1.0.0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-nexus
+spec:
+  selector:
+    app: ai-nexus
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
